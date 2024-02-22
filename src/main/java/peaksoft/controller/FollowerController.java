@@ -20,14 +20,12 @@ import java.util.List;
 public class FollowerController {
     private final FollowerService followerService;
     private final UserService userService;
-
     @PostMapping("/subscribe")
     public String subscribe(HttpSession session, @RequestParam("userId") Long userId) {
         User subscribeUser = (User) session.getAttribute("user");
         followerService.subscribe(subscribeUser, userService.findUserById(userId));
         return "redirect: /profile?userId=" + userId;
     }
-
     @GetMapping("/follows")
     public String follows(@RequestParam("userId") Long userId, @RequestParam("isFollow") boolean isFollow, Model model) {
         List<User> followers = null;
